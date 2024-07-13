@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Student Management System</h1>
+
+    <h2>Add Student</h2>
+    <form method="POST" action="/add_student">
+        First Name: <input type="text" name="first_name" required><br>
+        Last Name: <input type="text" name="last_name" required><br>
+        Roll Number: <input type="text" name="roll_number" required><br>
+        CGPA: <input type="text" name="cgpa" required><br>
+        Courses:
+        <input type="checkbox" name="courses" value="CSE CORE"> CSE CORE          <input type="checkbox" name="courses" value="CSE IT"> CSE IT
+        <input type="checkbox" name="courses" value="CSE AI-ML"> CSE AI-ML            <input type="checkbox" name="courses" value="CSE SOFTWARE"> CSE SOFTWARE
+        <input type="checkbox" name="courses" value="CSE DATA SCIENCE"> CSE DATA SCIENCE
+       
+       
+        <br>
+        <input type="submit" value="Add Student">
+    </form>
+
+    <h2>Search Students</h2>
+    <form method="POST" action="/search_student">
+        Search by Name or Roll Number: <input type="text" name="search_query" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <h2>Search Students by Course</h2>
+    <form method="POST" action="/search_course">
+        Search by Course ID: <input type="text" name="course_id" required>
+        <input type="submit" value="Search">
+    </form>
+
+    <h2>Student List</h2>
+    <ul>
+        {% for student in results %}
+            <li>
+                {{ student.first_name }} {{ student.last_name }}
+                (Roll Number: {{ student.roll_number }}, CGPA: {{ student.cgpa }}, Courses: {{ ', '.join(student.courses) }})
+                <a href="/delete_student/{{ student.roll_number }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
